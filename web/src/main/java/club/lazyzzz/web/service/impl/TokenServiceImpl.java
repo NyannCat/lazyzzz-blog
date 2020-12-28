@@ -1,6 +1,5 @@
 package club.lazyzzz.web.service.impl;
 
-import club.lazyzzz.web.config.property.LazyzzzProperty;
 import club.lazyzzz.web.exception.SecurityException;
 import club.lazyzzz.web.service.ITokenService;
 import com.auth0.jwt.JWT;
@@ -11,9 +10,9 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import javax.annotation.Nonnull;
+import java.security.SecureRandom;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -27,13 +26,13 @@ public class TokenServiceImpl implements ITokenService {
     private final JWTCreator.Builder builder;
     private final JWTVerifier verifier;
 
-    public TokenServiceImpl(LazyzzzProperty lazyzzzProperty) {
-        String secret = lazyzzzProperty.getTokenSecret();
-        Assert.hasText(secret, "token密钥不能为空");
-        String issuer = "lazyzzz";
+    public TokenServiceImpl() {
+        byte[] secret = new byte[256];
+        SecureRandom secureRandom = new SecureRandom();
+        secureRandom.nextBytes(secret);
         this.algorithm = Algorithm.HMAC256(secret);
-        this.builder = JWT.create().withIssuer(issuer);
-        this.verifier = JWT.require(algorithm).withIssuer(issuer).build();
+        this.builder = JWT.create().withIssuer("lazyzzz");
+        this.verifier = JWT.require(algorithm).withIssuer("lazyzzz").build();
     }
 
     @Override

@@ -12,7 +12,6 @@ public class LazyzzzProperty {
     private String adminPath = "static/admin";
     private String workDir = System.getProperty("user.home") + File.separator + "lazyzzz" + File.separator;
     private String uploadDir = workDir + "upload" + File.separator;
-    private String tokenSecret = "";
 
     //七牛云配置
     @NestedConfigurationProperty

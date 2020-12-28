@@ -24,8 +24,10 @@ mybatis-plus:
     banner: false
   type-enums-package: club.lazyzzz.web.model.enums
 
-lazyzzz:
-  token-secret: secret #JWT token密钥，请务必妥善管理
+knife4j:
+  production: true #线上环境请关闭开发文档
+
+#lazyzzz:
   # 若要使用七牛云，请手动开始
   #qi-niu-property:
     #access-key: access-key #七牛云access-key
@@ -33,5 +35,4 @@ lazyzzz:
     #bucket-name: bucket #七牛云access-key
     #domain: http://localhost # 七牛云绑定域名
 
-knife4j:
-  production: true #线上环境请关闭开发文档
+
