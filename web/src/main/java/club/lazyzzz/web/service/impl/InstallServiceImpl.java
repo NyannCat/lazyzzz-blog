@@ -23,7 +23,7 @@ public class InstallServiceImpl implements IInstallService {
     private ICategoryService categoryService;
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void install(UserRegisterDto dto) {
         userService.register(dto);
         //默认分类

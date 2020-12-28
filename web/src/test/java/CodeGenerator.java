@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 public class CodeGenerator {
 
-    @Test
     public void codeGenerator() {
         AutoGenerator generator = new AutoGenerator();
         //全局配置

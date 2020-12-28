@@ -6,6 +6,7 @@ import club.lazyzzz.web.model.entity.SysLog;
 import club.lazyzzz.web.security.annotation.SystemLog;
 import club.lazyzzz.web.service.IIp2RegionService;
 import club.lazyzzz.web.util.IpUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -19,6 +20,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
+@Slf4j
 @Aspect
 @Component
 public class SysLogAop {
@@ -37,7 +39,9 @@ public class SysLogAop {
 
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
+        log.debug(request.getRemoteAddr());
         String ipAddress = IpUtil.getIpAddress(request);
+        log.debug(ipAddress);
 
         IpDetail detail = ip2RegionService.getDetail(ipAddress);
         SysLog sysLog = new SysLog();
