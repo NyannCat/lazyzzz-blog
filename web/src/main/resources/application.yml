@@ -8,7 +8,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/blog?useSSL=false&serverTimezone=Asia/Shanghai
     username: root
-    password: toor
+    password: ${MYSQL_ROOT_PASSWORD}
   servlet:
     multipart:
       max-file-size: 10MB #最大文件上传上限

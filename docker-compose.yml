@@ -1,7 +1,0 @@
-version: '3'
-services:
-  redis:
-    image: redis:6.0.9-alpine
-    container_name: lazyzzz-redis-cache
-    volumes:
-      - conf/redis.conf:/etc/redis/redis.conf
