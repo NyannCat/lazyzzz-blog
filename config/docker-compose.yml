@@ -1,0 +1,26 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:8
+    container_name: blog-mysql
+    restart: always
+    volumes:
+      - ./data:/var/lib/mysql
+      - ./mysql/config/my.cnf:/etc/my.cnf
+      - ./mysql/init:/docker-entrypoint-initdb.d/
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456 #请务必更改默认密码
+      - MYSQL_DATABASE=blog
+    ports:
+    - 3306: 3306
+
+  web:
+    image: lazyzzz/lazyzzz-blog
+    container_name: blog-web
+    restart: always
+    volumes:
+      - ./lazyzzz:/root/lazyzzz
+    ports:
+      - 8080: 8080
+    depends_on:
+      - mysql
