@@ -5,7 +5,7 @@
         <el-card class="card">
           <div slot="header">
             <span>文章</span>
-            <div class="right-item"><i class="el-icon-plus"/></div>
+            <div class="right-item" @click="toArticleEditor"><i class="el-icon-plus"/></div>
           </div>
           <h2>{{ data.articleCount }}</h2>
         </el-card>
@@ -14,7 +14,7 @@
         <el-card class="card">
           <div slot="header">
             <span>留言</span>
-            <div class="right-item"><i class="el-icon-s-order"/></div>
+            <div class="right-item" @click="toComment"><i class="el-icon-s-order"/></div>
           </div>
           <h2>{{ data.commentCount }}</h2>
         </el-card>
@@ -93,9 +93,9 @@
           </el-table>
           <div style="display: block;text-align: center">
             <el-pagination
-              background
               :page-size="logs.size"
               :total="logs.total"
+              background
               layout="total, prev, pager, next"
               @size-change="handleSizeChange"
               @current-change="handleCurrentChange">
@@ -132,16 +132,16 @@ export default {
         commentCount: 0,
         duration: 0,
         comments: {
-          records: {
+          records: [{
             id: 0,
             articleId: 0,
             content: '',
             createTime: ''
-          }
+          }]
         }
       },
       logs: {
-        records: {
+        records: [{
           id: 0,
           ip: 0,
           country: '',
@@ -149,7 +149,7 @@ export default {
           city: '',
           description: '',
           createTime: '',
-        },
+        }],
         current: 1,
         size: 10,
         total: 0,
@@ -172,6 +172,12 @@ export default {
     handleCurrentChange(current) {
       this.logs.current = current
       this.getLogs()
+    },
+    toArticleEditor() {
+      this.$router.push('/article/editor')
+    },
+    toComment() {
+      this.$router.push('/comment/table')
     }
   }
 }
@@ -184,6 +190,7 @@ export default {
 
 .right-item {
   float: right;
+  cursor: pointer;
 }
 
 .dashboard {

@@ -57,7 +57,7 @@ create table if not exists sys_log
 (
     id          int auto_increment
         primary key,
-    ip          int                                 null comment 'ip地址, int类型存储, sql时需要转换',
+    ip          int unsigned                        null comment 'ip地址, int类型存储, sql时需要转换',
     country     varchar(127)                        null comment '国家名称',
     province    varchar(127)                        null comment '省份信息',
     city        varchar(127)                        null comment '城市名称',

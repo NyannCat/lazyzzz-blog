@@ -41,7 +41,11 @@ public class IndexController {
         model.addAttribute("vo", articleMapper.selectArticleVO(new Page<>(page, 10)));
         model.addAttribute("hottest", articleMapper.selectHottestArticle(10));
         model.addAttribute("categories", categoryMapper.selectCategoryVO());
-        model.addAttribute("user", userMapper.selectList(new QueryWrapper<>()).get(0));
+        try {
+            model.addAttribute("user", userMapper.selectList(new QueryWrapper<>()).get(0));
+        } catch (IndexOutOfBoundsException e) {
+            return "redirect:/admin/index.html#/install";
+        }
         return "index";
     }
 
@@ -74,8 +78,7 @@ public class IndexController {
     }
 
     @GetMapping("/admin")
-    public ModelAndView admin(ModelAndView mv) {
-        mv.setViewName("redirect:/admin/index.html");
-        return mv;
+    public String admin() {
+        return "redirect:/admin/index.html";
     }
 }
