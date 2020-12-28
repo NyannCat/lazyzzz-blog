@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>[[${article.title}]]</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" th:href="@{/vendor/toc/toc-helper.min.css}">
+    <link rel="stylesheet" th:href="@{/css/article.css}">
+    <link rel="stylesheet" th:href="@{/vendor/typo/typo.css}">
+</head>
+<body>
+<!--导航栏-->
+<nav th:replace="modules/common/header"></nav>
+
+<div class="pd-large">
+    <div class="ui container">
+        <!--头部-->
+        <div class="ui top attached segment">
+            <div class="ui horizontal link list">
+                <div class="item">
+                    <img alt="" class="ui avatar image" th:src="@{${user.avatar}}">
+                    <div class="content">[[${user.username}]]</div>
+                </div>
+                <div class="item">
+                    <i class="calendar icon"></i>
+                    [[${#temporals.format(article.createTime,'yyyy-MM-dd HH:mm')}]]
+                </div>
+                <div class="item">
+                    <i class="eye icon"></i>
+                    [[${article.views}]]
+                </div>
+            </div>
+        </div>
+        <!--图片区域-->
+        <div class="ui attached segment">
+            <img alt="" class="ui fluid rounded image" th:src="@{${article.coverPage}}">
+        </div>
+        <!--内容-->
+        <div class="ui attached segment pd-large">
+            <h2 class="ui center aligned header">[[${article.title}]]</h2>
+            <div data-toc="#toc" class="pd-large-lr typo typo-selection js-toc-content"
+                 th:utext="${article.formatContent}"></div>
+            <!--点赞-->
+            <div class="ui center aligned basic segment">
+                <button class="ui orange basic circular button" id="payButton">赞赏</button>
+            </div>
+            <div class="ui payQR flowing popup transition hidden">
+                <div class="ui orange basic label">
+                    <div class="ui images" style="font-size: inherit !important;">
+                        <div class="image">
+                            <img style="width: 120px" th:src="@{/img/wechat.jpg}">
+                            <div>支付宝</div>
+                        </div>
+                        <div class="image">
+                            <img style="width: 120px" th:src="@{/img/wechat.jpg}">
+                            <div>微信</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui attached positive message">
+            博客信息
+        </div>
+
+        <div class="ui bottom attached segment">
+            <!--评论内容-->
+            <div class="ui teal segment" id="comment-container">
+                <div>
+                    <div class="ui threaded comments">
+                        <h3 class="ui dividing header">评论</h3>
+                        <div class="comment" th:each="commentVO : ${commentVOS}">
+                            <a class="avatar" href="#">
+                                <img src="https://iupac.org/wp-content/uploads/2018/05/default-avatar.png">
+                            </a>
+                            <div class="content">
+                                <a class="author" href="#">
+                                    <span>[[${commentVO.comment.nickname}]]</span>
+                                </a>
+                                <div class="metadata">
+                                    <span>[[${commentVO.comment.email}]]</span>
+                                </div>
+                                <div class="metadata">
+                                        <span class="date"
+                                              th:text="${#temporals.format(commentVO.comment.createTime,'yyyy-MM-dd HH:mm')}"></span>
+                                </div>
+                                <div class="text" th:text="${commentVO.comment.content}"></div>
+                                <div class="actions">
+                                    <a class="reply" onclick="reply(this)" th:data-id="${commentVO.comment.id}"
+                                       th:data-nickname="${commentVO.comment.nickname}">回复</a>
+                                </div>
+                            </div>
+                            <div class="comments" th:each="reply : ${commentVO.reply}">
+                                <div class="comment">
+                                    <a class="avatar" href="#">
+                                        <img th:if="${reply.isAdmin == 0}" src="https://iupac.org/wp-content/uploads/2018/05/default-avatar.png">
+                                        <img th:if="${reply.isAdmin == 1}" th:src="@{${user.avatar}}">
+                                    </a>
+                                    <div class="content">
+                                        <a class="author" href="#">
+                                            <span th:if="${reply.isAdmin == 0}">[[${reply.nickname}]]</span>
+                                            <span th:if="${reply.isAdmin == 1}">[[${user.username}]]</span>
+                                        </a>
+                                        <div th:if="${reply.isAdmin == 0}" class="metadata">
+                                            <span>[[${reply.email}]]</span>
+                                        </div>
+                                        <div class="metadata">
+                                        <span class="date"
+                                              th:text="${#temporals.format(reply.createTime,'yyyy-MM-dd HH:mm')}"></span>
+                                            <a class="ui label" th:if="${reply.isAdmin == 1}">
+                                                博主
+                                            </a>
+                                        </div>
+                                        <div class="text" th:text="${reply.content}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--评论表单-->
+            <div class="ui form" id="comment-form">
+                <input name="articleId" th:value="${article.id}" type="hidden">
+                <input name="parentId" type="hidden" value="0">
+                <div class="field">
+                    <textarea name="content" placeholder="请输入评论内容*"></textarea>
+                </div>
+                <div class="fields">
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input name="nickname" placeholder="姓名*" type="text">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="mail icon"></i>
+                            <input name="email" placeholder="邮箱*" type="text">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="eye icon"></i>
+                            <input name="captcha" placeholder="验证码*" type="text">
+                            <img id="captcha" src="/api/captcha" alt="验证码" style="cursor: pointer;padding-left: 20px"
+                                 title="看不清?换一张">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <button class="ui teal button" id="comment-submit" type="button">
+                            <i class="edit icon"></i>发布
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!--浮窗目录-->
+<div id="toc" style="max-width: 270px;right: 10px"></div>
+
+<!--底部栏-->
+<footer th:replace="modules/common/footer"></footer>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+<script th:src="@{/vendor/toc/toc-helper.min.js}"></script>
+<script th:src="@{/js/header.js}"></script>
+<script th:src="@{/js/article.js}"></script>
+<script>
+    new TocHelper({
+        tocFixed: {
+            top: 200,
+        }
+    }).reset();
+</script>
+</body>
+</html>

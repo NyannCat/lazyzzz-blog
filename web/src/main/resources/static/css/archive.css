@@ -1,0 +1,8 @@
+body {
+    background: url("/img/bg.png");
+}
+
+.pd-huge {
+    padding-top: 5.5em !important;
+    padding-bottom: 5.5em !important;
+}

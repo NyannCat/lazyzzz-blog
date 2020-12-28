@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lazyzzz-Blog</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+</head>
+
+<body>
+<!--导航栏-->
+<nav th:replace="modules/common/header"></nav>
+
+<!--内容-->
+<div class="pd-huge" style="min-height: 60%">
+    <div class="ui container">
+        <div class="ui grid">
+            <!--左侧-->
+            <div class="eleven wide column">
+                <!--头部-->
+                <div class="ui top attached segment">
+                    <div class="ui middle aligned two column grid">
+                        <div class="column">
+                            <h3 class="ui teal header">最新发布</h3>
+                        </div>
+                        <div class="right aligned column">
+                            累计共<h2 class="ui orange header" style="display: inline"
+                                 th:text="${vo.total}"></h2>篇
+                        </div>
+                    </div>
+                </div>
+
+                <!--文章内容-->
+                <div class="ui attached segment">
+                    <div class="ui vertical segment" th:each="article : ${vo.records}">
+                        <div class="ui grid">
+                            <!--文章标题-->
+                            <div class="eleven wide column">
+                                <a class="ui header" th:href="@{/article/{id}(id=${article.id})}"
+                                   th:text="${article.title}"></a>
+                                <p th:text="${article.summary}"></p>
+                                <div class="ui grid">
+                                    <div class="fourteen wide column" style="position: absolute;bottom: 0;">
+                                        <div class="ui horizontal link list">
+                                            <div class="item">
+                                                <img class="ui avatar image" th:src="@{${user.avatar}}">
+                                                <div class="content">
+                                                    <a class="header" href="#">[[${user.username}]]</a>
+                                                </div>
+                                            </div>
+                                            <div class="item">
+                                                <i class="calendar icon"></i>
+                                                [[${#temporals.format(article.createTime,'yyyy-MM-dd HH:mm')}]]
+                                            </div>
+                                            <div class="item">
+                                                <i class="eye icon"></i>
+                                                [[${article.views}]]
+                                            </div>
+                                            <div class="item">
+                                                <i class="comment icon"></i>
+                                                [[${article.comments}]]
+                                            </div>
+                                            <div class="right item">
+                                                <a class="ui teal basic label" href="#">
+                                                    [[${article.categoryName}]]
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="five wide column">
+                                <a th:href="@{/article/{id}(id=${article.id})}">
+                                    <img class="ui rounded image" th:src="@{${article.coverPage}}">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--分页栏-->
+                <div class="ui bottom attached segment">
+                    <div class="ui middle aligned three column grid">
+                        <div class="column">
+                            <a class="ui mini teal basic button" th:href="@{/page?current={no}(no=${vo.current-1})}"
+                               th:if="${vo.current - 1 > 0}">上一页</a>
+                        </div>
+                        <div class="center aligned column">
+                            <span>共<h3 class="ui orange header" id="total" style="display: inline">[[${vo.pages}]]</h3>页，</span>
+                            <span>到第</span>
+                            <div class="ui input" style="width: 40px;height: 5px">
+                                <input id="page" name="page" type="text">
+                            </div>
+                            <span>页</span>
+                        </div>
+                        <div class="right aligned column">
+                            <a class="ui mini teal basic button" th:href="@{/page?current={no}(no=${vo.current+1})}"
+                               th:if="${vo.current + 1 <= vo.pages}">下一页</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--右侧-->
+            <div class="five wide column">
+                <!--个人信息-->
+                <div class="ui segments">
+                    <!--头像-->
+                    <div class="ui teal segment">
+                        <div class="ui two column centered grid">
+                            <div class="two column">
+                                <img style="margin: 0 auto" class="ui tiny circular image" th:src="@{${user.avatar}}">
+                            </div>
+                        </div>
+                        <h3 class="ui header" style="text-align: center">[[${user.username}]]</h3>
+                        <div style="text-align: center;margin-bottom: 10px">[[${user.description}]]</div>
+                        <div class="ui four column centered grid">
+                            <div class="two column">
+                                <i class="github icon"></i>
+                                <i class="google icon"></i>
+                            </div>
+                            <div class="two column">
+                                <i class="wechat icon"></i>
+                                <i class="weibo icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--分类栏-->
+                <div class="ui segments">
+                    <div class="ui secondary segment">
+                        <div class="ui two column grid">
+                            <div class="column">
+                                <i class="tag icon"></i>分类
+                            </div>
+                            <div class="right aligned column">
+                                <a href="#">more >></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui teal segment">
+                        <div class="ui fluid vertical menu">
+                            <a class="item" href="#" th:each="category : ${categories}">
+                                [[${category.name}]]
+                                <div class="ui teal basic left pointing label"
+                                     th:text="${category.count}"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!--热门文章-->
+                <div class="ui segments">
+                    <div class="ui secondary segment">
+                        <div class="ui two column grid">
+                            <div class="column">
+                                <i class="bullhorn icon"></i>热门文章
+                            </div>
+                            <div class="right aligned column">
+                                <a href="#">more >></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui teal segment">
+                        <div class="ui fluid vertical menu">
+                            <a class="item" th:href="@{/article/{id}(id=${article.id})}" th:each="article : ${hottest}">
+                                [[${article.title}]]
+                                <div class="ui teal basic left pointing label"
+                                     th:text="${article.views}"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!--二维码-->
+                <div class="ui horizontal divider header">扫码关注我</div>
+                <div class="ui centered card" style="width: 11em">
+                    <img alt="二维码" class="ui rounded image" th:src="@{/img/wechat.jpg}">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--底部栏-->
+<footer th:replace="modules/common/footer"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+<script th:src="@{/js/header.js}"></script>
+<script th:src="@{/js/index.js}"></script>
+</body>
+</html>

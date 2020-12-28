@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club.lazyzzz.web.mapper.CommentMapper">
+
+    <select id="selectByArticleId" resultType="club.lazyzzz.web.model.entity.Comment">
+        SELECT id,
+               content,
+               nickname,
+               email,
+               create_time,
+               article_id,
+               parent_id,
+               is_admin
+        FROM comment
+        WHERE article_id = #{articleId}
+    </select>
+</mapper>

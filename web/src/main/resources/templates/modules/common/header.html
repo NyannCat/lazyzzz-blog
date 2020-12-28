@@ -1,0 +1,22 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<nav class="ui inverted attached segment" style="padding: 0.25em!important;" th:fragment="header">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui teal header item">
+                Lazyzzz
+            </h2>
+            <a class="item" href="/" id="home">
+                <i class="home icon"></i> 首页
+            </a>
+            <a class="item" href="/archive" id="archive">
+                <i class="archive icon"></i> 归档
+            </a>
+            <div class="right item">
+                <div class="ui icon inverted transparent input">
+                    <input id="search" placeholder="Search..." type="text">
+                    <i class="search icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

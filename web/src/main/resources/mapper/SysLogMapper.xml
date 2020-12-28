@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club.lazyzzz.web.mapper.SysLogMapper">
+    <insert id="insert" parameterType="club.lazyzzz.web.model.entity.SysLog">
+        INSERT INTO sys_log(ip, country, province, city, description)
+        VALUES (INET_ATON(#{ip}), #{country}, #{province}, #{city}, #{description})
+    </insert>
+
+    <select id="selectPage" resultType="club.lazyzzz.web.model.entity.SysLog">
+        SELECT id, INET_NTOA(ip) as ip, country, province, city, description, create_time
+        FROM sys_log
+        ORDER BY create_time DESC
+    </select>
+</mapper>

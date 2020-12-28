@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/search.css}">
+</head>
+<body>
+<!--导航栏-->
+<nav th:replace="modules/common/header"></nav>
+
+<div style="padding-bottom: 4em;padding-top: 4em">
+    <div class="ui container">
+        <div class="ui center aligned basic segment">
+            <div class="ui large icon input">
+                <input id="localsearch" placeholder="Search..." type="text">
+                <i class="search icon"></i>
+            </div>
+            <button class="ui large teal secondary button" id="localsearchbutton">搜索</button>
+        </div>
+        <div class="ui top attached segment container-small">
+            <div class="ui middle aligned two column grid">
+                <div class="column">
+                    <h3 class="ui teal header">查询结果</h3>
+                </div>
+                <div class="right aligned column">
+                    共<h2 class="ui orange header" style="display: inline"
+                         th:text="${vo.total}"></h2>篇
+                </div>
+            </div>
+        </div>
+        <div class="ui attached segment container-small">
+            <div class="ui vertical segment" th:each="article : ${vo.records}" th:if="${vo.total != 0}">
+                <div class="ui grid">
+                    <!--                                文章标题-->
+                    <div class="eleven wide column">
+                        <a class="ui header" th:href="@{/article/{id}(id=${article.id})}" th:text="${article.title}"></a>
+                        <p th:text="${article.summary}"></p>
+                        <div class="ui grid">
+                            <div class="fourteen wide column">
+                                <div class="ui horizontal link list">
+                                    <div class="item">
+                                        <i class="calendar icon"></i>
+                                        [[${#temporals.format(article.createTime,'yyyy-MM-dd HH:mm')}]]
+                                    </div>
+                                    <div class="item">
+                                        <i class="eye icon"></i>
+                                        [[${article.views}]]
+                                    </div>
+                                    <div class="right item">
+                                        <div class="ui teal basic label">
+                                            [[${article.categoryName}]]
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="five wide column">
+                        <a th:href="@{/article/{id}(id=${article.id})}">
+                            <img class="ui rounded image" th:src="@{${article.coverPage}}">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="ui vertical segment" style="padding-top: 3em;padding-bottom: 3em;text-align: center"
+                 th:if="${vo.total == 0}">
+                <h1>未找到匹配结果</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--底部栏-->
+<footer th:replace="modules/common/footer"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+<script th:src="@{/js/search.js}"></script>
+</body>
+</html>

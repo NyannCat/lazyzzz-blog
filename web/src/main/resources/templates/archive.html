@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lazyzzz-Blog</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/archive.css}">
+</head>
+<body>
+<!--导航栏-->
+<nav th:replace="modules/common/header"></nav>
+<div class="pd-huge" style="min-height: 60%">
+    <div class="ui container">
+        <!-- header -->
+        <div class="ui top attached padded segment">
+            <div class="ui middle aligned two column grid">
+                <div class="column">
+                    <h3 class="ui teal header">归档</h3>
+                </div>
+                <div class="right aligned column">
+                    共<h3 class="ui orange header" style="display: inline-block">[[${count}]]</h3>篇
+                </div>
+            </div>
+        </div>
+        <!-- 时间线 -->
+        <div th:each="archive : ${archives}" style="padding-top: 20px">
+            <h2 class="ui center aligned header" style="color: black">[[${archive.year}]]</h2>
+            <div th:each="article : ${archive.articles}" class="ui fluid vertical menu">
+                <a th:href="@{/article/{id}(id=${article.id})}" target="_blank" class="item">
+                <span>
+                    <i class="teal mini circle icon" style="padding-right: 10px"></i>[[${article.title}]]
+                    <span class="ui teal basic left pointing label">[[${#temporals.format(article.createTime,'MM-dd')}]]</span>
+                </span>
+                    <div class="ui basic red label my-padded-small">[[${article.categoryName}]]</div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--底部栏-->
+<footer th:replace="modules/common/footer"></footer>
+</body>
+</html>

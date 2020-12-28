@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club.lazyzzz.web.mapper.ArticleMapper">
+    <update id="updateCommentsById">
+        UPDATE article
+        SET comments = comments + 1
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateViewsById">
+        UPDATE article
+        SET views = views + 1
+        WHERE id = #{id}
+    </update>
+
+    <select id="selectArticleVO" resultType="club.lazyzzz.web.model.vo.ArticleVO">
+        SELECT a.id,
+               a.title,
+               a.views,
+               a.likes,
+               a.shares,
+               a.comments,
+               a.type,
+               a.create_time,
+               a.update_time,
+               a.cover_page,
+               a.category_id,
+               a.summary,
+               c.name AS category_name
+        FROM article a
+                 INNER JOIN category c ON a.category_id = c.id
+        ORDER BY a.create_time DESC
+    </select>
+
+    <select id="selectArticleVOByKeyword" resultType="club.lazyzzz.web.model.vo.ArticleVO">
+        SELECT a.id,
+        a.title,
+        a.views,
+        a.likes,
+        a.shares,
+        a.comments,
+        a.type,
+        a.create_time,
+        a.update_time,
+        a.cover_page,
+        a.category_id,
+        a.summary,
+        c.name AS category_name
+        FROM article a
+        INNER JOIN category c ON a.category_id = c.id
+        <where>
+            <if test="keyword != null and keyword != ''">
+                AND a.title LIKE concat('%', concat(#{keyword}, '%'))
+            </if>
+        </where>
+        ORDER BY a.create_time DESC
+    </select>
+
+    <select id="selectArticleVOById" resultType="club.lazyzzz.web.model.vo.ArticleVO">
+        SELECT a.id,
+               a.title,
+               a.format_content,
+               a.views,
+               a.likes,
+               a.shares,
+               a.comments,
+               a.create_time,
+               a.update_time,
+               a.cover_page,
+               a.category_id,
+               a.summary,
+               c.name AS category_name
+        FROM article a
+                 INNER JOIN category c ON a.category_id = c.id
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="selectArchiveList" resultType="club.lazyzzz.web.model.vo.ArticleVO">
+        SELECT a.id,
+               a.title,
+               a.create_time,
+               c.name AS category_name
+        FROM article a
+                 INNER JOIN category c on a.category_id = c.id
+        ORDER BY a.create_time DESC
+    </select>
+
+    <select id="selectHottestArticle" resultType="club.lazyzzz.web.model.vo.ArticleVO">
+        SELECT a.id,
+               a.title,
+               a.views
+        FROM article a
+        ORDER BY a.views DESC
+        LIMIT #{topK}
+    </select>
+
+    <select id="selectByCategoryId" resultType="club.lazyzzz.web.model.vo.ArticleVO">
+        SELECT a.id,
+               a.title,
+               a.format_content,
+               a.views,
+               a.likes,
+               a.shares,
+               a.comments,
+               a.create_time,
+               a.update_time,
+               a.cover_page,
+               a.category_id,
+               a.summary,
+               c.name AS category_name
+        FROM article a
+                 INNER JOIN category c on a.category_id = c.id
+        WHERE c.id = #{categoryId}
+    </select>
+
+    <select id="selectTotalViews" resultType="java.lang.Integer">
+        SELECT sum(views)
+        FROM article;
+    </select>
+</mapper>

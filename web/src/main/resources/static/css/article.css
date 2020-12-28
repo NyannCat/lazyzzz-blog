@@ -1,0 +1,46 @@
+.pd-large {
+    padding-top: 3em !important;
+    padding-bottom: 3em !important;
+}
+
+.pd-large-lr {
+    padding-left: 3em !important;
+    padding-right: 3em !important;
+}
+
+.m-fixed {
+    position: fixed !important;
+    z-index: 10 !important;
+}
+
+.m-right-bottom {
+    bottom: 0 !important;
+    right: 0 !important;
+}
+
+.m-padded {
+    padding: 1em !important;
+}
+
+.ui.popup{overflow:auto;}
+
+body {
+    background: url("/img/bg.png");
+}
+.m-container {
+    max-width: 72em;
+    margin: auto;
+}
+.pd-large {
+    padding-top: 3em !important;
+    padding-bottom: 3em !important;
+}
+.pd-huge {
+    padding-top: 5.5em !important;
+    padding-bottom: 5.5em !important;
+}
+
+.container-small {
+    max-width: 65em !important;
+    margin: auto !important;
+}

@@ -1,0 +1,33 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: lazyzzz-web
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/blog?useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: toor
+  servlet:
+    multipart:
+      max-file-size: 10MB #最大文件上传上限
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    banner: false
+  type-enums-package: club.lazyzzz.web.model.enums
+
+lazyzzz:
+  token-secret: secret #JWT token密钥，请务必妥善管理
+  qi-niu-property:
+    access-key: access-key #七牛云access-key
+    secret-key: secret-key #七牛云secret-key
+    bucket-name: bucket #七牛云access-key
+    domain: http://localhost # 七牛云绑定域名
+
+knife4j:
+  production: true #线上环境请关闭开发文档
