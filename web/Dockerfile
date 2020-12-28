@@ -1,4 +1,4 @@
-FROM openjdk:11-alpine
+FROM adoptopenjdk/openjdk11-openj9
 
 ARG JAR_FILE=target/lazyzzz-blog.jar
 ARG PORT=8080
