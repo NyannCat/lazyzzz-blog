@@ -1,5 +1,8 @@
 server:
   port: 8080
+  compression:
+    # 默认不开启压缩，请配合nginx使用
+    enabled: false
 
 spring:
   application:
@@ -23,11 +26,12 @@ mybatis-plus:
 
 lazyzzz:
   token-secret: secret #JWT token密钥，请务必妥善管理
-  qi-niu-property:
-    access-key: access-key #七牛云access-key
-    secret-key: secret-key #七牛云secret-key
-    bucket-name: bucket #七牛云access-key
-    domain: http://localhost # 七牛云绑定域名
+  # 若要使用七牛云，请手动开始
+  #qi-niu-property:
+    #access-key: access-key #七牛云access-key
+    #secret-key: secret-key #七牛云secret-key
+    #bucket-name: bucket #七牛云access-key
+    #domain: http://localhost # 七牛云绑定域名
 
 knife4j:
   production: true #线上环境请关闭开发文档
