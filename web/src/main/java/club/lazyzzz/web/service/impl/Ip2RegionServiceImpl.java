@@ -33,7 +33,6 @@ public class Ip2RegionServiceImpl implements IIp2RegionService {
             DataBlock block = dbSearcher.memorySearch(ip);
             String region = block.getRegion();
             String[] split = region.split("\\|");
-            System.out.println(Arrays.toString(split));
             detail = new IpDetail();
             //bean填充
             detail.setCityId(block.getCityId());

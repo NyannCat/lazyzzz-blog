@@ -1,7 +1,6 @@
 package club.lazyzzz.web.util;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.regex.Pattern;
 
 public class IpUtil {
 
@@ -11,9 +10,6 @@ public class IpUtil {
             "WL-Proxy-Client-IP",
             "X-Real-IP"
     };
-
-    private static final Pattern pattern = Pattern.
-            compile("\\A(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)(\\.(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)){3}\\z");
 
     /**
      * 判断ip是否为空，空返回true
@@ -47,11 +43,6 @@ public class IpUtil {
         if ("0:0:0:0:0:0:0:1".equals(ip)) {
             ip = "127.0.0.1";
         }
-
-        return isIpv4(ip) ? ip : "0.0.0.0";
-    }
-
-    public static boolean isIpv4(String ipAddr) {
-        return pattern.matcher(ipAddr).matches();
+        return ip;
     }
 }

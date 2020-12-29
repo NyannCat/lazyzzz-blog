@@ -9,7 +9,6 @@ import java.io.File;
 @Data
 @ConfigurationProperties("lazyzzz")
 public class LazyzzzProperty {
-    private String adminPath = "static/admin";
     private String workDir = System.getProperty("user.home") + File.separator + "lazyzzz" + File.separator;
     private String uploadDir = workDir + "upload" + File.separator;
 

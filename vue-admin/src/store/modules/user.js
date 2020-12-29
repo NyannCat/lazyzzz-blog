@@ -56,7 +56,7 @@ const actions = {
         const { name, avatar } = data
 
         commit('SET_NAME', name)
-        commit('SET_AVATAR', 'http://localhost:8080' + avatar)
+        commit('SET_AVATAR', process.env.VUE_APP_SERVER_HOST + avatar)
         resolve(data)
       }).catch(error => {
         reject(error)

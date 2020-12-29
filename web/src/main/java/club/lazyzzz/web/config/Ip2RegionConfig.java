@@ -5,13 +5,13 @@ import org.lionsoul.ip2region.DbConfig;
 import org.lionsoul.ip2region.DbMakerConfigException;
 import org.lionsoul.ip2region.DbSearcher;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.util.Assert;
 
 import java.io.IOException;
 
 @Slf4j
-@Component
+@Configuration
 public class Ip2RegionConfig {
     @Bean
     public DbSearcher dbSearcher() {
