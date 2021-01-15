@@ -21,7 +21,8 @@ services:
     volumes:
       - ./lazyzzz:/root/lazyzzz
     environment:
-      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_ROOT_PASSWORD=123456 #务必保证与上文的MYSQL密码一致
+      - JAVA_OPTS="-Xms256m -Xmx256m" #虚拟机参数，按需更改
     ports:
       - "8080:8080"
     depends_on:
