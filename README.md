@@ -41,7 +41,6 @@ cp script.sql mysql/init/script.sql
 
 3. 修改docker-compose.yml， 其中最重要的是要修改`MYSQL_ROOT_PASSWORD`的默认值
 ```yaml
-environment:
 version: '3'
 services:
   mysql:
