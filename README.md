@@ -4,7 +4,7 @@
 
 </center>
 
-> 一个适合新手学习，参考和使用的开源博客
+> Simple Open Source Blog
 
 <p align="center">
 <a href="https://github.com/NyannCat/lazyzzz-blog"><img alt="GitHub license" src="https://img.shields.io/github/license/NyannCat/lazyzzz-blog"></a>
